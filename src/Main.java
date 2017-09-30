@@ -22,21 +22,23 @@ public class Main {
             // it gets appended to the block property
             List<Line> childblock = new ArrayList<Line>();
             Line parent = null;
-
+            List<Line> parentblock = new ArrayList<Line>();
             Boolean in_code_block = false;
             while ((n = in.readLine()) != null) {
 
                 // check if parent new code block is being init
                 if (n.contains("{")) {
                     in_code_block = true;
-                    parent = tok.get_tree(n);
-                    AST.add(parent);
+                    parentblock.add(tok.get_tree(n));
+                    int size = parentblock.size();
+                    AST.add(parentblock.get(size - 1));
                     continue;
                 }
 
                 if (n.contains("}")) {
                     in_code_block = false;
-                    parent.set_block(childblock);
+                    parentblock.get(parentblock.size() - 1).set_block(childblock);
+                    parentblock.remove(parentblock.size() - 1);
                     childblock = new ArrayList<Line>();
                 }
                 //parent=tok.get_tree(n);
