@@ -4,32 +4,34 @@ package tokenizer;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 
 /**
  * Created by justa on 9/30/2017.
  * <p>
- * Whitespace and comments are skipped over, no tokens are returned.
+ * Whitespace and comments are skipped over, no tokens are return ed.
  * <p>
- * In order to write the tokenizer we need to look more closely into the syntax of our language. The idea is to notice that depending on the current character (as returned by input.peek()) we can decide what kind of token to read:
+ * In order to write the tokenizer we need to look more closely into the syntax of our language. The idea is to notice that depending on the current character (as return ed by input.peek()) we can decide what kind of token to read:
  * <p>
  * First off, skip over whitespace.
- * If input.eof() then return null.
+ * If input.eof() then return  null.
  * If it's a sharp sign (#), skip comment (retry after the end of line).
  * If it's a quote then read a string.
  * If it's a digit, then we proceed to read a number.
  * If it's a “letter”, then read an identifier or a keyword token.
- * If it's one of the punctuation characters, return a punctuation token.
- * If it's one of the operator characters, return an operator token.
+ * If it's one of the punctuation characters, return  a punctuation token.
+ * If it's one of the operator characters, return  an operator token.
  * If none of the above, error out with input.croak().
  * So here's the “read_next” function — the “core” of the tokeniz
  */
 public class tokenizer {
     private String input;
-
     final private String[] keywords = {"blaze", "nut", "if", "while", "for"};
 
-    // returns a substring between two characters
+    // return s a substring between two characters
     private String get_str_between(String start, String end) {
         String str = this.input;
 
@@ -61,6 +63,7 @@ public class tokenizer {
         String[] if_args = {"if", get_str_between("(", ")")};
         return new Line("control", if_args);
     }
+
     private Boolean is_for() {
         return this.input.startsWith("for");
     }
@@ -69,6 +72,7 @@ public class tokenizer {
         String[] for_args = {"for", get_str_between("(", ")")};
         return new Line("control", for_args);
     }
+
     private Boolean is_while() {
         return this.input.startsWith("while");
     }
@@ -77,6 +81,7 @@ public class tokenizer {
         String[] while_args = {"while", get_str_between("(", ")")};
         return new Line("control", while_args);
     }
+
     public Line get_tree(String input) {
         this.input = input;
 
@@ -89,7 +94,7 @@ public class tokenizer {
         }
 
         if (is_while()) {
-            return parse_for();
+            return parse_while();
         }
 
         if (is_assignment()) {
@@ -102,6 +107,7 @@ public class tokenizer {
         String type;
         String[] metadata;
         Object exe;
+        List<Line> block = new ArrayList<Line>();
 
         Line(String type, String[] metadata) {
             this.type = type;
@@ -121,6 +127,10 @@ public class tokenizer {
                     break;
                 }
             }
+        }
+
+        public void set_block(List<Line> b) {
+            this.block = b;
         }
 
     }
@@ -173,12 +183,18 @@ public class tokenizer {
     class Control {
         String type;
         String args;
+        Line[] block;
 
-        public Control(String type, String args) {
+        Control(String type, String args) {
             this.type = type;
             this.args = args;
         }
 
+        public void append_block(Line v) {
+            int new_size = this.block.length + 1;
+            this.block = Arrays.copyOf(this.block, new_size);
+            this.block[new_size] = v;
+        }
     }
 }
 

@@ -1,49 +1,59 @@
-package tokenizer;
 import tokenizer.*;
 import tokenizer.tokenizer.Line;
+
 import java.io.*;
-public class Main
-{
-    public static void main(String[] args) throws IOException
-    {
-        tokenizer tok = new tokenizer();         
-        //Line a = tok.get_tree("mav mdicik = 5.6;");
+import java.util.ArrayList;
+import java.util.List;
 
-        String n; 
-        int k=0;
-        try
-        {
-            FileReader fr=new FileReader("helloworld.mav");
-            BufferedReader in=new BufferedReader(fr);
+public class Main {
+    public static void main(String[] args) throws IOException {
+        tokenizer tok = new tokenizer();
+        //Line b = tok.get_tree("if (true) {");
 
-            //System.out.println("Following are the details in the file:");
-            while((n=in.readLine())!=null)
-            {                
-                k++;
+        String n;
+        try {
+            FileReader fr = new FileReader("examples/blocks.mav");
+            BufferedReader in = new BufferedReader(fr);
+
+            // declare ast list for line objects
+            List<Line> AST = new ArrayList<Line>();
+
+            // childblock is an array list of code within parent code block.
+            // it gets appended to the block property
+            List<Line> childblock = new ArrayList<Line>();
+            Line parent = null;
+
+            Boolean in_code_block = false;
+            while ((n = in.readLine()) != null) {
+
+                // check if parent new code block is being init
+                if (n.contains("{")) {
+                    in_code_block = true;
+                    parent = tok.get_tree(n);
+                    AST.add(parent);
+                    continue;
+                }
+
+                if (n.contains("}")) {
+                    in_code_block = false;
+                    parent.set_block(childblock);
+                    childblock = new ArrayList<Line>();
+                }
+                //parent=tok.get_tree(n);
+                if (in_code_block) {
+                    // add the curret iterations to the childblock list
+                    childblock.add(tok.get_tree(n));
+
+                } else {
+                    AST.add(tok.get_tree(n));
+                }
             }
             in.close();
             fr.close();
-
-            Line AST[]=new Line[k];
-            int i=0;
-            fr=new FileReader("helloworld.mav");
-            in=new BufferedReader(fr);
-            while((n=in.readLine())!=null)
-            {
-                Line a=tok.get_tree(n); 
-                AST[i]=a;
-                i++;            
-            }
-            in.close();
-            fr.close();
-        }
-        catch(FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             //System.err.println(e);
-        }     
+        }
 
-        
-        
         System.out.println("ayyeee");
     }
 }

@@ -1,0 +1,14 @@
+mav g = 10;
+mav newg = 20;
+
+if (true) {
+    mav a = 10;
+    mav v = 12;
+    mav x = 'x';
+}
+
+while (true) {
+    mav b = 60;
+    mav cry = 'me';
+    mav fuckme = 'fuck';
+}
