@@ -3,3 +3,5 @@
 main -> {
     mtfu("Hello world");
 }
+
+mav a = mavdown;
