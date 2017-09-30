@@ -1,7 +1,10 @@
 package tokenizer;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.swing.*;
+import java.util.ConcurrentModificationException;
 
 /**
  * Created by justa on 9/30/2017.
@@ -24,7 +27,7 @@ import javax.swing.*;
 public class tokenizer {
     private String input;
 
-    final private String[] keywords = {"diversity", "mav", "blaze", "nut"};
+    final private String[] keywords = {"blaze", "nut", "if", "while", "for"};
 
     // returns a substring between two characters
     private String get_str_between(String start, String end) {
@@ -50,9 +53,45 @@ public class tokenizer {
         return new Line("assign", meta);
     }
 
+    private Boolean is_if() {
+        return this.input.startsWith("if");
+    }
 
+    private Line parse_if() {
+        String[] if_args = {"if", get_str_between("(", ")")};
+        return new Line("control", if_args);
+    }
+    private Boolean is_for() {
+        return this.input.startsWith("for");
+    }
+
+    private Line parse_for() {
+        String[] for_args = {"for", get_str_between("(", ")")};
+        return new Line("control", for_args);
+    }
+    private Boolean is_while() {
+        return this.input.startsWith("while");
+    }
+
+    private Line parse_while() {
+        String[] while_args = {"while", get_str_between("(", ")")};
+        return new Line("control", while_args);
+    }
     public Line get_tree(String input) {
         this.input = input;
+
+        if (is_if()) {
+            return parse_if();
+        }
+
+        if (is_for()) {
+            return parse_for();
+        }
+
+        if (is_while()) {
+            return parse_for();
+        }
+
         if (is_assignment()) {
             return parse_assignment();
         }
@@ -77,8 +116,9 @@ public class tokenizer {
                     break;
                 }
 
-                case "call": {
-
+                case "control": {
+                    this.exe = new Control(this.metadata[0], this.metadata[1]);
+                    break;
                 }
             }
         }
@@ -128,6 +168,17 @@ public class tokenizer {
                 }
             }
         }
+    }
+
+    class Control {
+        String type;
+        String args;
+
+        public Control(String type, String args) {
+            this.type = type;
+            this.args = args;
+        }
+
     }
 }
 
