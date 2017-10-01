@@ -1,4 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import tokenizer.*;
 import tokenizer.tokenizer.Line;
 
@@ -13,15 +12,17 @@ public class Main {
 
         String n;
         List<Line> AST = new ArrayList<Line>();
-
         try {
             FileReader fr = new FileReader("examples/blocks.mav");
             BufferedReader in = new BufferedReader(fr);
 
             // declare ast list for line objects
-            Boolean in_code_block = false;
 
             while ((n = in.readLine()) != null) {
+
+                // if whitespace, skip the line
+                if (n.trim().isEmpty()) continue;
+
 
                 Line cur = tok.get_tree(n);
                 // check if parent new code block is being init
@@ -36,7 +37,6 @@ public class Main {
         } catch (FileNotFoundException e) {
             //System.err.println(e);
         }
-
         System.out.println("GOT AST");
         parse p = new parse();
 
@@ -49,7 +49,7 @@ public class Main {
         String n;
         tokenizer t = new tokenizer();
         List<Line> clust = new ArrayList<Line>();
-        while (!(n=br.readLine()).contains("}")) {
+        while (!(n = br.readLine()).contains("}")) {
             n = n.trim();
             Line cur = t.get_tree(n);
             if (n.contains("{")) {

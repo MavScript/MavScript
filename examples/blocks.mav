@@ -1,5 +1,8 @@
 mav g = 10;
-mav newg = 20;
+mav newg = '6345';
+
+mav hackuta = "tiring";
+
 
 if (g == newg) {
     mav a = 10;
@@ -16,6 +19,10 @@ if (g == newg) {
             mav ggg = mavdown;
             mav ggg = mavdown;
         }
+
+        if (a diversity 3) {
+
+        }
     }
 }
 
@@ -25,6 +32,8 @@ while (true) {
     mav fuckme = 'fuck';
 }
 
-blaze myfunc(firstargs,secondarg) {
-    mav a = 10;
+blaze name(are1, arg2) {
+    nut a;
+
+    mtfu("print;"
 }

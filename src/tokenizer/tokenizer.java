@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class tokenizer {
     private String input;
-    final private String[] keywords = {"blaze", "nut", "if", "while", "for"};
 
     // return s a substring between two characters
     private String get_str_between(String start, String end) {
@@ -82,8 +81,11 @@ public class tokenizer {
     }
 
     private Line build_function_dec() {
-        String[] args = get_str_between("(", ")").split(",");
-        return new Line("function", args);
+        String args = get_str_between("(", ")");
+        String name = get_str_between(" ", "(" ).trim();
+        String[] meta = {name, args};
+
+        return new Line("function", meta);
     }
 
     public Line get_tree(String input) {
@@ -112,9 +114,13 @@ public class tokenizer {
     }
 
     public class Line {
-        String type;
+        public String type;
         String[] metadata;
-        Object exe;
+        //public Object exe;
+        public Variable var;
+        public Control cont;
+        public Function func;
+
         List<Line> block = new ArrayList<Line>();
 
         Line(String type, String[] metadata) {
@@ -126,12 +132,17 @@ public class tokenizer {
         void set_exe() {
             switch (this.type) {
                 case "assign": {
-                    this.exe = new Variable(this.metadata[0], this.metadata[1]);
+                    this.var = new Variable(this.metadata[0], this.metadata[1]);
                     break;
                 }
 
                 case "control": {
-                    this.exe = new Control(this.metadata[0], this.metadata[1]);
+                    this.cont = new Control(this.metadata[0], this.metadata[1]);
+                    break;
+                }
+
+                case "function": {
+                    this.func = new Function(this.metadata[0], this.metadata[1]);
                     break;
                 }
             }
@@ -141,21 +152,21 @@ public class tokenizer {
             this.block = b;
         }
 
-        public Object get_exe() {
-            return this.exe;
-        }
-
     }
 
     class Variable {
-        String name;
-        String type;
-        String val;
+        public String name;
+        public String type;
+        public String val;
 
         Variable(String name, String val) {
             this.name = name;
             this.val = val;
             this.type = determine_type(this.val);
+
+            if (this.type.equals("string")) {
+                this.val = this.val.replaceAll("'", "");
+            }
         }
 
         /**
@@ -169,7 +180,7 @@ public class tokenizer {
                 this.val = this.val.equals("mavup") ? "true" : "false";
                 return "boolean";
             } else if (val.startsWith("\'")) {
-                return "string";
+                return "String";
             } else if (val.startsWith("[")) {
                 // if its an array, get the first element check the type of that to determine the type of the array
                 String firstele = val.substring(1, val.indexOf(','));
@@ -179,15 +190,12 @@ public class tokenizer {
                 return "array " + type;
 
             } else {
-                try {
-                    Double.parseDouble(val);
+                if (val.contains(".")) {
                     return "double";
-                } catch (NumberFormatException n) {
+                } else {
                     return "int";
-                } catch (Exception e) {
-                    System.out.println("WTF");
-                    return "WTF";
                 }
+
             }
         }
 
@@ -219,6 +227,22 @@ public class tokenizer {
 
         public String args() {
             return this.args;
+        }
+    }
+
+    class Function {
+        String name;
+        String args;
+
+        Function(String name, String args) {
+            this.name = name;
+            this.args = args;
+            extract_args();
+        }
+
+        void extract_args() {
+            String[] a = this.args.split(",");
+            System.out.println(a);
         }
     }
 }
