@@ -75,7 +75,7 @@ public class parse extends tokenizer {
                 String ctype = c.type;
                 String args = c.args;
                 List<Line> inline = cur.block;
-                trans = assign_if(cur);
+                trans = assign_control(cur);
             }
             if (trans.isEmpty()) {
                 System.out.println("WTF NO TRANSPILE IM TIRRED AS FUCKSS UGHHH");
@@ -98,11 +98,11 @@ public class parse extends tokenizer {
             return "String " + v.name + " = " + '\"' + v.val + '\"' + ';';
         }
 
-        String assign_if(Line cur) {
+        String assign_control(Line cur) {
             Control c = cur.cont;
 
             // first build if statement
-            String if_temp = "if (ARGS) {\n".replace("ARGS", c.args);
+            String if_temp = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
 
             StringBuilder sb = new StringBuilder();
             // iterate over inline liens
