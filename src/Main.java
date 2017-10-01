@@ -37,7 +37,10 @@ public class Main {
             //System.err.println(e);
         }
 
+        System.out.println("GOT AST");
         parse p = new parse();
+
+        System.out.println("PRASR AEa");
         p.parse_syntax_list(AST);
         System.out.println("ayyeee");
     }

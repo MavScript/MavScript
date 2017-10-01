@@ -1,12 +1,7 @@
 package tokenizer;
 
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -82,8 +77,17 @@ public class tokenizer {
         return new Line("control", while_args);
     }
 
+    private Boolean is_function_dec() {
+        return this.input.contains("blaze ");
+    }
+
+    private Line build_function_dec() {
+        String[] args = get_str_between("(", ")").split(",");
+        return new Line("function", args);
+    }
+
     public Line get_tree(String input) {
-        this.input = input;
+        this.input = input.trim();
 
         if (is_if()) {
             return parse_if();
@@ -99,6 +103,10 @@ public class tokenizer {
 
         if (is_assignment()) {
             return parse_assignment();
+        }
+
+        if (is_function_dec()) {
+            return build_function_dec();
         }
         return null;
     }
@@ -131,6 +139,10 @@ public class tokenizer {
 
         public void set_block(List<Line> b) {
             this.block = b;
+        }
+
+        public Object get_exe() {
+            return this.exe;
         }
 
     }
@@ -178,22 +190,35 @@ public class tokenizer {
                 }
             }
         }
+
+        public String get_name() {
+            return this.name;
+        }
+
+        public String get_type() {
+            return this.type;
+        }
+
+        public String get_val() {
+            return this.val;
+        }
     }
 
     class Control {
         String type;
         String args;
-        Line[] block;
 
         Control(String type, String args) {
             this.type = type;
             this.args = args;
         }
 
-        public void append_block(Line v) {
-            int new_size = this.block.length + 1;
-            this.block = Arrays.copyOf(this.block, new_size);
-            this.block[new_size] = v;
+        public String get_type() {
+            return this.type;
+        }
+
+        public String args() {
+            return this.args;
         }
     }
 }

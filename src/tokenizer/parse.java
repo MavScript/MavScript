@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 
 public class parse extends tokenizer{
-    cli command_line= new cli();
+    //cli command_line= new cli();
 
     //String file_name= command_line.file_name;
     String file_name="helloabc.mav";
@@ -23,6 +23,7 @@ public class parse extends tokenizer{
     String file_dec=new_file_name+".java";
 
     public void parse_syntax_list(List<Line> a) throws IOException {
+        System.out.println("WTF");
         ArrayList syntax_app = new ArrayList();
         int size = a.size();
         for (int i = 0; i < a.size(); i++) {
@@ -36,6 +37,7 @@ public class parse extends tokenizer{
 
 
     void file_java_write() throws IOException{
+        System.out.println("WTF");
         File file = new File(file_dec);
         FileWriter out = new FileWriter(file);
         PrintWriter printr= new PrintWriter(out);
@@ -56,7 +58,7 @@ public class parse extends tokenizer{
         printr.println("{");
         printr.println("}");
         printr.println("}");
-
+        System.out.println("got here");
 
 
 
