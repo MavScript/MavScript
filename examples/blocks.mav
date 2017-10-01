@@ -5,15 +5,23 @@ if (g == newg) {
     mav a = 10;
     mav v = 12;
     mav x = 'x';
+
+    if (true) {
+        mav f = 'a';
+    }
+    if (g==1) {
+        mav to = 'ad';
+
+        for (mav = 0; i < 5: i++) {
+            mav ggg = mavdown;
+            mav ggg = mavdown;
+        }
+    }
 }
 
 while (true) {
     mav b = 60;
     mav cry = 'me';
     mav fuckme = 'fuck';
-
-    if (true) {
-        mav ffff = 12;
-    }
 }
 

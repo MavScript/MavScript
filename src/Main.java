@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import tokenizer.*;
 import tokenizer.tokenizer.Line;
 
@@ -11,44 +12,24 @@ public class Main {
         //Line b = tok.get_tree("if (true) {");
 
         String n;
+        List<Line> AST = new ArrayList<Line>();
+
         try {
             FileReader fr = new FileReader("examples/blocks.mav");
             BufferedReader in = new BufferedReader(fr);
 
             // declare ast list for line objects
-            List<Line> AST = new ArrayList<Line>();
-
-            // childblock is an array list of code within parent code block.
-            // it gets appended to the block property
-            List<Line> childblock = new ArrayList<Line>();
-            Line parent = null;
-            List<Line> parentblock = new ArrayList<Line>();
             Boolean in_code_block = false;
+
             while ((n = in.readLine()) != null) {
 
+                Line cur = tok.get_tree(n);
                 // check if parent new code block is being init
                 if (n.contains("{")) {
-                    in_code_block = true;
-                    parentblock.add(tok.get_tree(n));
-                    int size = parentblock.size();
-                    AST.add(parentblock.get(size - 1));
-                    continue;
+                    List<Line> clust = get_block_cluster(in);
+                    cur.set_block(clust);
                 }
-
-                if (n.contains("}")) {
-                    in_code_block = false;
-                    parentblock.get(parentblock.size() - 1).set_block(childblock);
-                    parentblock.remove(parentblock.size() - 1);
-                    childblock = new ArrayList<Line>();
-                }
-                //parent=tok.get_tree(n);
-                if (in_code_block) {
-                    // add the curret iterations to the childblock list
-                    childblock.add(tok.get_tree(n));
-
-                } else {
-                    AST.add(tok.get_tree(n));
-                }
+                AST.add(cur);
             }
             in.close();
             fr.close();
@@ -56,6 +37,24 @@ public class Main {
             //System.err.println(e);
         }
 
+        parse p = new parse();
+        p.parse_syntax_list(AST);
         System.out.println("ayyeee");
+    }
+
+    private static List<Line> get_block_cluster(BufferedReader br) throws IOException {
+        String n;
+        tokenizer t = new tokenizer();
+        List<Line> clust = new ArrayList<Line>();
+        while (!(n=br.readLine()).contains("}")) {
+            n = n.trim();
+            Line cur = t.get_tree(n);
+            if (n.contains("{")) {
+                List<Line> nest_block = get_block_cluster(br);
+                cur.set_block(nest_block);
+            }
+            clust.add(cur);
+        }
+        return clust;
     }
 }
