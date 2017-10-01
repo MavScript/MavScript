@@ -39,7 +39,16 @@ public class Main {
         }
         parse p = new parse();
 
-        p.parse_syntax_list(AST);
+        String java = p.parse_syntax_list(AST);
+
+        // write java string to file
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("examples/compiled/mylitfile.java"));
+            out.write(java);
+            out.close();
+        } catch (Exception e) {
+            System.out.println("OMG");
+        }
         System.out.println("ayyeee");
     }
 

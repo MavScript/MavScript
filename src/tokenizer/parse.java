@@ -20,16 +20,20 @@ public class parse extends tokenizer {
 
     String file_dec = new_file_name + ".java";
 
-    public void parse_syntax_list(List<Line> AST) throws IOException {
+    public String parse_syntax_list(List<Line> AST) throws IOException {
         System.out.println("WTF");
         Javafy javafy = new Javafy();
 
         // iterate over lines
+        String program = "public class main { public static void main(String[] args) {";
         for (Line cur : AST) {
             String java_transpile = javafy.feed(cur);
-            System.out.println(java_transpile);
-
+            program += java_transpile;
         }
+        program = program + "}}";
+        System.out.println(program);
+
+        return program;
     }
 
 
@@ -68,7 +72,7 @@ public class parse extends tokenizer {
             String type = cur.type;
             String trans = "";
             if (type.equals("assign")) {
-                trans = (cur.var.type.equals("string")) ? assign_str(cur) : assign_num(cur);
+                trans = ("String".equals(cur.var.type)) ? assign_str(cur) : assign_num(cur);
 
             } else if (type.equals("control")) {
                 Control c = cur.cont;
@@ -95,7 +99,7 @@ public class parse extends tokenizer {
 
         String assign_str(Line cur) {
             Variable v = cur.var;
-            return "String " + v.name + " = " + '\"' + v.val + '\"' + ';';
+            return "String " + v.name + " = \"" + v.val + "\";";
         }
 
         String assign_control(Line cur) {

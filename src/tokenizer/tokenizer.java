@@ -177,7 +177,7 @@ public class tokenizer {
         private String determine_type(String val) {
             if (val.equals("mavup") || val.equals("mavdown")) {
                 this.val = this.val.equals("mavup") ? "true" : "false";
-                return "boolean";
+                return "Boolean";
             } else if (val.startsWith("\'")) {
                 return "String";
             } else if (val.startsWith("[")) {
