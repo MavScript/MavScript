@@ -164,9 +164,8 @@ public class tokenizer {
             this.val = val;
             this.type = determine_type(this.val);
 
-            if (this.type.equals("string")) {
-                this.val = this.val.replaceAll("'", "");
-            }
+            this.val = this.val.replaceAll("'", "");
+
         }
 
         /**

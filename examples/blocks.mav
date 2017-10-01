@@ -1,7 +1,6 @@
 mav g = 10;
 mav newg = '6345';
-
-mav hackuta = "tiring";
+mav hackuta = 'tiring';
 
 
 if (g == newg) {
@@ -15,13 +14,8 @@ if (g == newg) {
     if (g==1) {
         mav to = 'ad';
 
-        for (mav = 0; i < 5: i++) {
-            mav ggg = mavdown;
-            mav ggg = mavdown;
-        }
-
         if (a diversity 3) {
-
+            mav itworks = mavup;
         }
     }
 }

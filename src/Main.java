@@ -37,10 +37,8 @@ public class Main {
         } catch (FileNotFoundException e) {
             //System.err.println(e);
         }
-        System.out.println("GOT AST");
         parse p = new parse();
 
-        System.out.println("PRASR AEa");
         p.parse_syntax_list(AST);
         System.out.println("ayyeee");
     }
@@ -51,6 +49,10 @@ public class Main {
         List<Line> clust = new ArrayList<Line>();
         while (!(n = br.readLine()).contains("}")) {
             n = n.trim();
+            // tune out whitespace
+            if (n.isEmpty()) continue;
+
+
             Line cur = t.get_tree(n);
             if (n.contains("{")) {
                 List<Line> nest_block = get_block_cluster(br);

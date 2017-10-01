@@ -1,7 +1,5 @@
 
 package tokenizer;
-import tokenizer.*;
-import tokenizer.tokenizer;
 import java.io.*;
 import java.util.*;
 import java.io.IOException;
@@ -28,23 +26,9 @@ public class parse extends tokenizer {
 
         // iterate over lines
         for (Line cur : AST) {
-            String type = cur.type;
-            if (type.equals("assign")) {
-                String j;
-                if (cur.var.type.equals("string")) {
-                    j = javafy.assign_str(cur);
-                } else {
-                    j = javafy.assign_num(cur);
-                }
-                System.out.println('s'); // write to file
+            String java_transpile = javafy.feed(cur);
+            System.out.println(java_transpile);
 
-            } else if (type.equals("control")) {
-                Control c = cur.cont;
-                String ctype = c.type;
-                String args = c.args;
-                List<Line> inline = cur.block;
-
-            }
         }
     }
 
@@ -78,8 +62,28 @@ public class parse extends tokenizer {
 
 
     class Javafy {
+        Line cur;
+        String transpiled;
+        String feed(Line cur) {
+            String type = cur.type;
+            String trans = "";
+            if (type.equals("assign")) {
+                trans = (cur.var.type.equals("string")) ? assign_str(cur) : assign_num(cur);
 
-
+            } else if (type.equals("control")) {
+                Control c = cur.cont;
+                String ctype = c.type;
+                String args = c.args;
+                List<Line> inline = cur.block;
+                trans = assign_if(cur);
+            }
+            if (trans.isEmpty()) {
+                System.out.println("WTF NO TRANSPILE IM TIRRED AS FUCKSS UGHHH");
+                return null;
+            } else {
+                return trans;
+            }
+        }
         String assign_num(Line cur) {
             Variable v = cur.var;
             String name = v.name;
@@ -91,13 +95,21 @@ public class parse extends tokenizer {
 
         String assign_str(Line cur) {
             Variable v = cur.var;
-            return v.type + " " + v.name + " = \"" + v.val + "\";";
+            return "String " + v.name + " = " + '\"' + v.val + '\"' + ';';
         }
 
         String assign_if(Line cur) {
             Control c = cur.cont;
+
+            // first build if statement
+            String if_temp = "if (ARGS) {\n".replace("ARGS", c.args);
+
+            StringBuilder sb = new StringBuilder();
             // iterate over inline liens
-            return null; // TODO:
+            for (Line cur_inline : cur.block) {
+               if_temp += feed(cur_inline) + "\n ";
+            }
+            return if_temp + '}';
         }
     }
 }
