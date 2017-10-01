@@ -1,18 +1,19 @@
+blaze.neigh("Hello world");
+
 mav g = 10;
 mav newg = '6345';
 mav hackuta = 'tiring';
 
-
-if (g diversity newg) {
+if (g diversity 20) {
     mav a = 10;
     mav v = 12;
     mav x = 'x';
 
     if (true) {
-        mav f = 'a';
+        mav f = g + 40;
     }
     if (g !diversity 1) {
-        mav to = 'ad';
+        mav to = 'hello ' + 'world!';
 
         if (a diversity 3) {
             mav itworks = mavup;

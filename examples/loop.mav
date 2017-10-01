@@ -1,0 +1,7 @@
+blaze.neigh("About to perform a for loop in MavScript");
+
+for (mav a = 0; a < 10; a++) {
+    blaze.neigh(a+20);
+}
+
+blaze.tingle();

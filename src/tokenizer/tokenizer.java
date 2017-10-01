@@ -1,5 +1,7 @@
 package tokenizer;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +79,7 @@ public class tokenizer {
     }
 
     private Boolean is_function_dec() {
-        return this.input.contains("blaze ");
+        return this.input.startsWith("blaze ");
     }
 
     private Line build_function_dec() {
@@ -86,6 +88,18 @@ public class tokenizer {
         String[] meta = {name, args};
 
         return new Line("function", meta);
+    }
+
+    Boolean is_function_call() {
+        return this.input.startsWith("blaze.");
+    }
+
+    Line ref_function() {
+        String func = get_str_between(".", "(");
+        String args = get_str_between("(", ")");
+        String[] meta = {func, args};
+        return new Line("function", meta);
+        //return true;
     }
 
     public Line get_tree(String input) {
@@ -109,6 +123,10 @@ public class tokenizer {
 
         if (is_function_dec()) {
             return build_function_dec();
+        }
+
+        if (is_function_call()) {
+            return ref_function();
         }
         return null;
     }
@@ -217,11 +235,15 @@ public class tokenizer {
 
         Control(String type, String args) {
             this.type = type;
-            this.args = args.replace("diversity", "!=");
+
             if (args.contains("!diversity")) {
                 args = args.replace("!diversity", "==");
             } else if (args.contains("diversity")) {
                 args = args.replace("diversity", "!=");
+            }
+
+            if (type.equals("for")) {
+                args = args.replace("mav", "int");
             }
             this.args = args;
         }
@@ -238,17 +260,23 @@ public class tokenizer {
     class Function {
         String name;
         String args;
-
+        String java_wrap;
         Function(String name, String args) {
             this.name = name;
             this.args = args;
-            extract_args();
-        }
+            this.java_wrap = get_func_wrap().replace("ARGS", args);
 
-        void extract_args() {
-            String[] a = this.args.split(",");
-            System.out.println(a);
+        }
+        String get_func_wrap() {
+            switch (this.name) {
+                //println
+                case "neigh": return "System.out.println(ARGS);";
+                case "neighf": return "System.out.print(ARGS);";
+                case "tingle": return "for (int i = 0; i < 100; i++) { System.out.println(\"MY MAV SENSES ARE TINGING\");}";
+                default: return "WTF";
+            }
         }
     }
 }
 
+// if u got this far, im sorry

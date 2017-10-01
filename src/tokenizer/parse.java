@@ -13,73 +13,34 @@ import java.io.IOException;
 public class parse extends tokenizer {
     //cli command_line= new cli();
 
-    //String file_name= command_line.file_name;
-    String file_name = "helloabc.mav";
-    int index = file_name.indexOf('.');
-    String new_file_name = file_name.substring(0, index);
-
-    String file_dec = new_file_name + ".java";
+    //String file_name= command_line.file_name
 
     public String parse_syntax_list(List<Line> AST) throws IOException {
-        System.out.println("WTF");
         Javafy javafy = new Javafy();
 
         // iterate over lines
-        String program = "public class main { public static void main(String[] args) {";
+        String program = "package compiled; public class Compiled { public static void main(String[] args) {";
         for (Line cur : AST) {
             String java_transpile = javafy.feed(cur);
             program += java_transpile;
         }
         program = program + "}}";
-        System.out.println(program);
 
         return program;
     }
 
 
-    void file_java_write() throws IOException {
-        System.out.println("WTF");
-        File file = new File(file_dec);
-        FileWriter out = new FileWriter(file);
-        PrintWriter printr = new PrintWriter(out);
-        printr.println("import java.util.*");
-        printr.println("import java.lang.*");
-        printr.println("import java.io.*");
-        printr.println("import java.net.*");
-        printr.println("import java.security.*");
-        printr.println("import java.sql.*");
-        printr.println("import java.swing.*");
-        printr.println("import java.rmi.*");
-        printr.println("import java.nio.*");
-        printr.println("import java.text.*");
-        printr.println("import java.awt.*");
-        printr.println("public class " + new_file_name);
-        printr.println("{");
-        printr.println("public static void main(String[] args");
-        printr.println("{");
-        printr.println("}");
-        printr.println("}");
-        System.out.println("got here");
-
-
-    }
-
 
     class Javafy {
-        Line cur;
-        String transpiled;
         String feed(Line cur) {
             String type = cur.type;
             String trans = "";
             if (type.equals("assign")) {
                 trans = ("String".equals(cur.var.type)) ? assign_str(cur) : assign_num(cur);
-
             } else if (type.equals("control")) {
-                Control c = cur.cont;
-                String ctype = c.type;
-                String args = c.args;
-                List<Line> inline = cur.block;
                 trans = assign_control(cur);
+            } else if (type.equals("function")) {
+                trans = cur.func.java_wrap;
             }
             if (trans.isEmpty()) {
                 System.out.println("WTF NO TRANSPILE IM TIRRED AS FUCKSS UGHHH");
@@ -108,7 +69,6 @@ public class parse extends tokenizer {
             // first build if statement
             String if_temp = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
 
-            StringBuilder sb = new StringBuilder();
             // iterate over inline liens
             for (Line cur_inline : cur.block) {
                if_temp += feed(cur_inline) + "\n ";
