@@ -3,7 +3,7 @@ mav newg = '6345';
 mav hackuta = 'tiring';
 
 
-if (g == newg) {
+if (g diversity newg) {
     mav a = 10;
     mav v = 12;
     mav x = 'x';
@@ -11,7 +11,7 @@ if (g == newg) {
     if (true) {
         mav f = 'a';
     }
-    if (g==1) {
+    if (g !diversity 1) {
         mav to = 'ad';
 
         if (a diversity 3) {

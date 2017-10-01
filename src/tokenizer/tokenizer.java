@@ -217,6 +217,12 @@ public class tokenizer {
 
         Control(String type, String args) {
             this.type = type;
+            this.args = args.replace("diversity", "!=");
+            if (args.contains("!diversity")) {
+                args = args.replace("!diversity", "==");
+            } else if (args.contains("diversity")) {
+                args = args.replace("diversity", "!=");
+            }
             this.args = args;
         }
 
