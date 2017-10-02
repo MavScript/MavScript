@@ -60,7 +60,7 @@ public class Main {
 
         //MAGIC
 
-        compiled.Compiled.main(args);
+        //compiled.Compiled.main(args);
     }
 
     private static List<Line> get_block_cluster(BufferedReader br) throws IOException {

@@ -1,5 +1,4 @@
 blaze.neigh("Triangle pattern");
-
 mav itr = 20;
 for (mav a = 1; a <= itr; a++) {
     for (mav b = 0; b < a; b++) {

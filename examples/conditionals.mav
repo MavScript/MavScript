@@ -1,0 +1,6 @@
+mav a = 10;
+mav b = 20;
+
+if (a diversity b) {
+    blaze.neigh("They are diverse!");
+}
