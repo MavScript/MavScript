@@ -1,30 +1,13 @@
-package tokenizer;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
+package Helpers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by justa on 9/30/2017.
  * <p>
- * Whitespace and comments are skipped over, no tokens are return ed.
- * <p>
- * In order to write the tokenizer we need to look more closely into the syntax of our language. The idea is to notice that depending on the current character (as return ed by input.peek()) we can decide what kind of token to read:
- * <p>
- * First off, skip over whitespace.
- * If input.eof() then return  null.
- * If it's a sharp sign (#), skip comment (retry after the end of line).
- * If it's a quote then read a string.
- * If it's a digit, then we proceed to read a number.
- * If it's a “letter”, then read an identifier or a keyword token.
- * If it's one of the punctuation characters, return  a punctuation token.
- * If it's one of the operator characters, return  an operator token.
- * If none of the above, error out with input.croak().
- * So here's the “read_next” function — the “core” of the tokeniz
- */
-public class tokenizer {
+*/
+public class Tokenizer {
     private String input;
 
     // return s a substring between two characters

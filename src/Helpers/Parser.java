@@ -1,6 +1,5 @@
 
-package tokenizer;
-import java.io.*;
+package Helpers;
 import java.util.*;
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ import java.io.IOException;
  * Created by justa on 9/30/2017.
  */
 
-public class parse extends tokenizer {
+public class Parser extends Tokenizer {
     //cli command_line= new cli();
 
     //String file_name= command_line.file_name

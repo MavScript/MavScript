@@ -94,4 +94,4 @@ for (mav a = 1; a <= itr; a++) {
 
 # Prospects
 
-In the future we aim to implement comments and functions into the language, as well as better design in the tokenizer, parser, and how the syntax tree is built.
+In the future we aim to implement comments and functions into the language, as well as better design in the Helpers, parser, and how the syntax tree is built.
