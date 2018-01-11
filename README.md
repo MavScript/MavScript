@@ -11,12 +11,12 @@ working  .java files.
 # Setup
 To run MavScript locally, clone this repo and execute the following commands:
 
-###Compilation
+### Compilation
 To compile MavScript navigate to its directory and execute
 
 ``  javac -dist src/Main.java src/Helpers/*.java   ``
 
-###Execution
+### Execution
 
 To run MavScript and compile your .mav files
 
@@ -34,7 +34,7 @@ In this case, ``helloworld.mav.java`` will be created.
 
 # Usage
 
-###Variables
+### Variables
 MavScript is dynamically typed, a variable is declared using the 'mav' keyword.
 ````
 mav my_int = 20;
@@ -46,14 +46,14 @@ mav my_false bool = mavdown;
 mav my_str = 'Hello World!';
 ````
 
-###Functions
+### Functions
 All functions are prefaced with "blaze." due to our tight time constraints.
 Currently the only function support is println.
 ````
 blaze.neigh("Hello World!");
 ````
 
-###Loops and Conditionals
+### Loops and Conditionals
 If, for, and while are self-explanatory
 However, the '==' operator does not exist in MavScript.
 ````==```` is replaced with the ````diversity```` keyword.
@@ -80,7 +80,7 @@ if (1 diversity 2) {
 }
 ````
 
-###Error Codes
+### Error Codes
 UTA's failure to communicate with their students resonates with MavScripts error messages, meaning it doesn't have any.
 
 # Examples
