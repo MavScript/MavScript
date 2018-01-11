@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8425866e-b223-4596-b591-adeb0d052967" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/loop.mav.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Parser$Javafy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Parser.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Tokenizer$Control.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Tokenizer$Function.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Tokenizer$Line.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Tokenizer$Variable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Helpers/Tokenizer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Main.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -55,8 +45,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            <state relative-caret-position="759">
+              <caret line="23" column="4" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -245,6 +235,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MavScript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MavScript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Helpers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -765,12 +773,12 @@
       <workItem from="1508105108159" duration="97000" />
       <workItem from="1511764969188" duration="813000" />
       <workItem from="1512014993380" duration="397000" />
-      <workItem from="1515706924734" duration="4101000" />
+      <workItem from="1515706924734" duration="4265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79820000" />
+    <option name="totallyTimeSpent" value="79984000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1237,8 +1245,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        <state relative-caret-position="759">
+          <caret line="23" column="4" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
           <folding />
         </state>
       </provider>
