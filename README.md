@@ -14,7 +14,7 @@ To run MavScript locally, clone this repo and execute the following commands:
 ### Compilation
 To compile MavScript navigate to its directory and execute
 
-``  javac -dist src/Main.java src/Helpers/*.java   ``
+``  javac -d dist src/Main.java src/Helpers/*.java   ``
 
 ### Execution
 
