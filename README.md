@@ -1,12 +1,14 @@
-#MavScript
+# MavScript
+
 MavScript is an esoteric, dynamically typed, UTA themed programming language written at HackUTA
 
-#How it works
+# How it works
+
 Given the 24-hour time constraint, MavScript is very poorly written.
 MavScript Compiler essentially reads in .mav files and transpiles them into
 working  .java files.
 
-#Usage
+# Usage
 
 MavScript is dynamically typed, a variable is declared using the 'mav' keyword.
 ````
@@ -49,13 +51,13 @@ if (1 diversity 2) {
 }
 ````
 
-#Examples
+# Examples
 
-##Hello world!
+## Hello world!
 ````
 blaze.neigh("Hello, world!);
 ````
-##Fizzbuzz
+## Fizzbuzz
 ````
 blaze.neigh("FIZZBUZZ");
 
@@ -77,7 +79,8 @@ for (mav i = 1; i <= 100; i++) {
 }
 ````
 
-##Right Triangle
+## Right Triangle
+
 ````
 blaze.neigh("Triangle pattern");
 mav itr = 20;
@@ -89,5 +92,6 @@ for (mav a = 1; a <= itr; a++) {
 }
 ````
 
-#Prospects
-In the we aim to implement comments and functions into the language, as well as better design in the tokenizer, parser, and how the syntax tree is built.
+# Prospects
+
+In the future we aim to implement comments and functions into the language, as well as better design in the tokenizer, parser, and how the syntax tree is built.
