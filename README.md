@@ -18,7 +18,7 @@ To compile MavScript navigate to its directory and execute
 
 ### Execution
 
-To run MavScript and compile your .mav files
+To run MavScript and compile your ```.mav``` files
 
 ``java -cp dist Main``
 
@@ -28,14 +28,23 @@ Example: ``examples/helloworld.mav``
 <br><br>
 This will navigate to the ``examples`` directory and compile ``helloworld.mav``
 
-MavScript will create a new file in this directory with the .mav suffix
+MavScript will create a new file in this directory with the ```.mav``` suffix
 
 In this case, ``helloworld.mav.java`` will be created.
 
 # Usage
 
 ### Variables
-MavScript is dynamically typed, a variable is declared using the 'mav' keyword.
+MavScript is dynamically typed, a variable is declared using the ``mav`` keyword.
+UT Arlingtons mascot is the Maverick, of course :)
+
+`Booleans` do not exist in MavScript like they do in other languages.
+MavScript is dynamically types, so `bool` casted as `mavs`, however MavScript uses different keywords to denote `true` and `false`
+
+`mavup` will transpile to `true`
+
+`mavdown` will transpile to `false`
+
 ````
 mav my_int = 20;
 
@@ -44,13 +53,16 @@ mav my_true_bool = mavup;
 mav my_false bool = mavdown;
 
 mav my_str = 'Hello World!';
+
+// Mav Up!!!
 ````
 
 ### Functions
-All functions are prefaced with "blaze." due to our tight time constraints.
-Currently the only function support is println.
+All functions are prefaced with `blaze`. Due to our tight time constraints,
+currently the only function support is `println`.
 ````
 blaze.neigh("Hello World!");
+// transpile to System.out.println("Hello World!");
 ````
 
 ### Loops and Conditionals
@@ -81,7 +93,7 @@ if (1 diversity 2) {
 ````
 
 ### Error Codes
-UTA's failure to communicate with their students resonates with MavScripts error messages, meaning it doesn't have any.
+UTA's failure to communicate important info to their students resonates with MavScripts error messages, meaning it doesn't have any.
 
 # Examples
 
@@ -126,4 +138,7 @@ for (mav a = 1; a <= itr; a++) {
 
 # Prospects
 
-I plan on adding an interactive CLI for MavScript using command line args. - Anthony :)
+I plan on adding an interactive CLI for MavScript using command line args.
+ I also plan on adding arrays and custom functions.
+ 
+ -- Anthony :)
