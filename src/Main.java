@@ -1,10 +1,8 @@
 import tokenizer.*;
 import tokenizer.tokenizer.Line;
 
-import javax.tools.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -55,10 +53,10 @@ public class Main {
 
 
         } catch (Exception e) {
-            System.out.println("OMG");
+            System.out.println("FUCK");
         }
 
-        //MAGIC
+        //fuck me
 
         //compiled.Compiled.main(args);
     }
@@ -71,7 +69,6 @@ public class Main {
             n = n.trim();
             // tune out whitespace
             if (n.isEmpty()) continue;
-
 
             Line cur = t.get_tree(n);
             if (n.contains("{")) {

@@ -43,7 +43,7 @@ public class parse extends tokenizer {
                 trans = cur.func.java_wrap;
             }
             if (trans.isEmpty()) {
-                System.out.println("WTF NO TRANSPILE IM TIRRED AS FUCKSS UGHHH");
+                System.out.println("WTF");
                 return null;
             } else {
                 return trans;
