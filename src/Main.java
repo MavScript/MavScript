@@ -1,4 +1,5 @@
-import Helpers.*;
+import Helpers.Parser;
+import Helpers.Tokenizer;
 import Helpers.Tokenizer.Line;
 
 import java.io.*;
