@@ -8,8 +8,33 @@ Given the 24-hour time constraint, MavScript is very poorly written.
 MavScript Compiler essentially reads in .mav files and transpiles them into
 working  .java files.
 
+# Setup
+To run MavScript locally, clone this repo and execute the following commands:
+
+###Compilation
+To compile MavScript navigate to its directory and execute
+
+``  javac -dist src/Main.java src/Helpers/*.java   ``
+
+###Execution
+
+To run MavScript and compile your .mav files
+
+``java -cp dist Main``
+
+MavScript will then ask for the path of the file you'd like to transpile
+
+Example: ``examples/helloworld.mav``
+<br><br>
+This will navigate to the ``examples`` directory and compile ``helloworld.mav``
+
+MavScript will create a new file in this directory with the .mav suffix
+
+In this case, ``helloworld.mav.java`` will be created.
+
 # Usage
 
+###Variables
 MavScript is dynamically typed, a variable is declared using the 'mav' keyword.
 ````
 mav my_int = 20;
@@ -21,35 +46,42 @@ mav my_false bool = mavdown;
 mav my_str = 'Hello World!';
 ````
 
+###Functions
 All functions are prefaced with "blaze." due to our tight time constraints.
 Currently the only function support is println.
 ````
 blaze.neigh("Hello World!");
 ````
 
+###Loops and Conditionals
 If, for, and while are self-explanatory
 However, the '==' operator does not exist in MavScript.
-'==' is replace with the keyword 'diversity';
+````==```` is replaced with the ````diversity```` keyword.
+This is due to UTA's staggering desire to let incoming freshmen know how diverse we are :)
 
-== is '!diversity'
+```!diversity``` transpiles to ```==```
 
-!= is 'diversity'
+``diversity`` transpiles to ``==``
 
 ````
+// diversity examples
 for (mav a = 0; a < 50; a++) {
     blaze.neigh(a);
 }
 
 
-while (1 !diversity 1) {
+while (1 !diversity 1) { // this block will execute
     blaze.neigh(mavdown);
 }
 
 
 if (1 diversity 2) {
-    blaze.neigh(true);
+    blaze.neigh(mavup); // this block will execute, because 1 is diverse with 2 ;)
 }
 ````
+
+###Error Codes
+UTA's failure to communicate with their students resonates with MavScripts error messages, meaning it doesn't have any.
 
 # Examples
 
@@ -94,4 +126,4 @@ for (mav a = 1; a <= itr; a++) {
 
 # Prospects
 
-In the future we aim to implement comments and functions into the language, as well as better design in the Helpers, parser, and how the syntax tree is built.
+I plan on adding an interactive CLI for MavScript using command line args. - Anthony :)
