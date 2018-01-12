@@ -21,21 +21,27 @@ public class Main {
             System.out.println("\nPlease supply cmd arguments");
             return;
         }
-        String filename = "";
+
+        String flag = args[0];
+
+        String filename;
 
         // check if the -f flag is present
-        if (args[0].equals("-f")) {
+        // meaning a single file should be compiled
+        if (flag.equals("-f") || flag.equals("-file")) {
             filename = args[1];
-        } else {
-            System.out.println("wat");
+            Compiler c = new Compiler();
+            String java = c.compileMavScript(filename);
+            FileGenerator.writeJavaToFile(java, filename);
+
         }
 
-        // write java string to file
-        Compiler c = new Compiler();
+        // check for the -d comand, meaning an entire
+        // folder should be compiled
+        if (flag.equals("-d") || flag.equals("-directory")) {
 
-        String java = c.compileMavScript(filename);
+        }
 
-        FileGenerator.writeJavaToFile(java, filename);
         System.out.println("\nSuccess");
     }
 }

@@ -1,1 +1,0 @@
-package compiled; public class Compiled { public static void main(String[] args) {}}
