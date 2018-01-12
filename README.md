@@ -1,6 +1,6 @@
 # MavScript
 
-MavScript is an esoteric, dynamically typed, UTA themed programming language written at HackUTA
+It was written at HackUTA and took about 17 hours in total to complete. Given the time contraints, it lacks the utility of a full programming language, but it's still capable of solving FIZZBUZZ and a few other primitive algorithms. It is dynamically typed and dependency free.
 
 # How it works
 
