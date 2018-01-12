@@ -92,7 +92,6 @@ public class Parser {
         }
 
         javafy.setMainMethod();
-
         return javafy.code;
     }
 
