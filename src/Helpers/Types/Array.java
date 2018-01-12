@@ -14,15 +14,15 @@ public class Array {
 
     public Array(String name, String val) {
         this.name = name;
-        this.val = val;
 
         System.out.println(val);
 
         // now determine type of array by instantiating variable instance of the first element
-        String firstElement = Parser.getStrBetween(this.val, "[", ",");
+        String firstElement = Parser.getStrBetween(val, "[", ",");
         this.type = TypeChecker.determineType(firstElement);
 
-        String data = Parser.getStrBetween(this.val, "[", "]");
+        String data = Parser.getStrBetween(val, "[", "]");
+        this.val = data;
 
         String[] split = data.split(",");
         int len = split.length;
@@ -33,6 +33,10 @@ public class Array {
             Variable v = new Variable(Integer.toString(i), cur, this.type);
             individualVals[i] = v;
         }
+
+//        if ("String".equals(this.type)) {
+//            this.val = this.val.replace("'", "\"");
+//        }
 
         this.array = individualVals;
     }

@@ -17,7 +17,6 @@ public class Parser {
     // current line in iteration
     private String input;
     private TypeChecker tc = new TypeChecker();
-
     /**
      * utility function return s a substring between two characters
      * @param start character to start
@@ -43,7 +42,7 @@ public class Parser {
     }
 
     private Line parseArray() {
-        String name = getStrBetween(this.input, " ", "=");
+        String name = getStrBetween(this.input, "e ", "=");
         String val = getStrBetween(this.input, "=", ";");
 
         String[] meta = {name, val};

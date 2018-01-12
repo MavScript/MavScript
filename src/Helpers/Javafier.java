@@ -19,12 +19,19 @@ public class Javafier {
         String type = cur.type;
         String trans = "";
 
-        if (type.equals("assign")) {
-            trans = ("String".equals(cur.var.type)) ? assignString(cur) : assignNum(cur);
-        } else if (type.equals("control")) {
-            trans = assignControl(cur);
-        } else if (type.equals("function")) {
-            trans = cur.func.java_wrap;
+        switch (type) {
+            case "assign":
+                trans = ("String".equals(cur.var.type)) ? assignString(cur) : assignGenericVar(cur);
+                break;
+            case "control":
+                trans = assignControl(cur);
+                break;
+            case "function":
+                trans = cur.func.java_wrap;
+                break;
+            case "array":
+                trans = assignArray(cur);
+                break;
         }
 
         if (trans.isEmpty()) {
@@ -34,7 +41,7 @@ public class Javafier {
             return trans;
         }
     }
-    String assignNum(Line cur) {
+    String assignGenericVar(Line cur) {
         Variable v = cur.var;
         String name = v.name;
         String val = v.val;
@@ -45,29 +52,53 @@ public class Javafier {
 
     String assignString(Line cur) {
         Variable v = cur.var;
-        return "String " + v.name + " = \"" + v.val + "\";";
+        return "String " + v.name + " = " + v.val + ";";
+    }
+
+
+    String assignArray(Line cur) {
+
+        Array a = cur.arr;
+        String name = a.name;
+        String type = a.type;
+
+        // Build the arrayBody (data that goes between the brackets)
+        StringBuilder arrayBody = new StringBuilder();
+        int len = a.array.length;
+
+        // iterate of the Line.arr.array Variable array and build the body
+        for (int i = 0; i < len; i++) {
+            // if the current iteration is NOT the last iteration, tack on a comma bc its important
+            if (i < len-1) {
+                arrayBody.append(a.array[i].val).append(", ");
+            } else {
+                // on the last iteration ignore the comma
+                arrayBody.append(a.array[i].val);
+            }
+        }
+        return type + "[] " + name + " = {" + arrayBody + "};";
     }
 
     String assignControl(Line cur) {
         Control c = cur.ctrl;
 
         // first build if statement
-        String statement = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
+        String statement = "TYPE (ARGS) {".replace("ARGS", c.args).replace("TYPE", c.type);
 
         // iterate over inline liens
         for (Line cur_inline : cur.block) {
-            statement += feed(cur_inline) + "\n ";
+            statement += feed(cur_inline) + " ";
         }
-        return statement + '}';
+        return statement + "}";
     }
-
+    
     public void setMainMethod() {
         String mainMethodSkeleton =
-                    "public class Main {\n" +
-                        "\tpublic static void main(String[] args) {\n" +
-                            "\t\t<code>\n" +
-                        "\t}\n" +
-                    "}\n";
+                    "public class Main {" +
+                        "\tpublic static void main(String[] args) {" +
+                            "<code>" +
+                        "\t}" +
+                    "}";
         this.code = mainMethodSkeleton.replace("<code>", this.code);
     }
 
@@ -78,7 +109,7 @@ public class Javafier {
         // make the skeleton
         String prototype =
                 "package " + packageName +
-                        "\n\n<code>";
+                        "<code>";
         this.code = prototype.replace("<code>", this.code);
     }
 

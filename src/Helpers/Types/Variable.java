@@ -38,6 +38,6 @@ public class Variable {
     }
 
     public void setString() {
-        this.val = this.val.replaceAll("'", "");
+        this.val = this.val.replaceAll("'", "\"");
     }
 }
