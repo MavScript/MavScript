@@ -13,10 +13,10 @@ import java.util.List;
 public class Compiler {
 
     public String compileMavScript(String filename) throws IOException {
-        Tokenizer tok = new Tokenizer();
+        Parser tok = new Parser();
         //Line b = tok.buildTree("if (true) {");
         String n;
-        List<Tokenizer.Line> AST = new ArrayList<Tokenizer.Line>();
+        List<Line> AST = new ArrayList<Line>();
         try {
             FileReader fr = new FileReader(filename);
             BufferedReader in = new BufferedReader(fr);
@@ -29,10 +29,10 @@ public class Compiler {
                 if (n.trim().isEmpty()) continue;
 
 
-                Tokenizer.Line cur = tok.buildTree(n);
+                Line cur = tok.buildTree(n);
                 // check if parent new code block is being init
                 if (n.contains("{")) {
-                    List<Tokenizer.Line> clust = getBlockCluster(in);
+                    List<Line> clust = getBlockCluster(in);
                     cur.set_block(clust);
                 }
                 AST.add(cur);
@@ -42,24 +42,24 @@ public class Compiler {
         } catch (FileNotFoundException e) {
             System.out.println("File path not found! :(\n");
         }
-        Parser p = new Parser();
+        Javafier p = new Javafier();
 
         return p.parse_syntax_list(AST);
 
     }
 
-    private List<Tokenizer.Line> getBlockCluster(BufferedReader br) throws IOException {
+    private List<Line> getBlockCluster(BufferedReader br) throws IOException {
         String n;
-        Tokenizer t = new Tokenizer();
-        List<Tokenizer.Line> clust = new ArrayList<Tokenizer.Line>();
+        Parser t = new Parser();
+        List<Line> clust = new ArrayList<Line>();
         while (!(n = br.readLine()).contains("}")) {
             n = n.trim();
             // tune out whitespace
             if (n.isEmpty()) continue;
 
-            Tokenizer.Line cur = t.buildTree(n);
+            Line cur = t.buildTree(n);
             if (n.contains("{")) {
-                List<Tokenizer.Line> nest_block = getBlockCluster(br);
+                List<Line> nest_block = getBlockCluster(br);
                 cur.set_block(nest_block);
             }
             clust.add(cur);

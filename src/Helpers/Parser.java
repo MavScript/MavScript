@@ -1,21 +1,89 @@
 package Helpers;
 
+import Helpers.Types.TypeChecker;
+
 import java.io.IOException;
 import java.util.List;
 
-
-
 /**
  * Created by Anthony Vardaro on 9/30/2017.
- */
+ *
+ * the tokenizer simple reads a single line and determines what to do with it
+ * in terms of how it gets formatted in the abstract syntax tree
+ * <p>
+*/
+public class Parser {
+    
+    // current line in iteration
+    private String input;
+    TypeChecker tc = new TypeChecker();
 
-public class Parser extends Tokenizer {
-    //cli command_line= new cli();
+    /**
+     * utility function return s a substring between two characters
+     * @param start character to start
+     * @param end character to end
+     * @return substring between two characters
+     */
+    public String getStrBetween(String start, String end) {
+        String str = this.input;
 
-    //String file_name= command_line.file_name
+        str = str.substring(str.indexOf(start) + 1);
+        str = str.substring(0, str.indexOf(end));
+        return str.trim();
+    }
+    
+    // extracts metadata about assignemnt
+    private Line parse_assignment() {
+        String name = getStrBetween(" ", "=");
+        String val = getStrBetween("=", ";");
 
-    public String parse_syntax_list(List<Line> AST) throws IOException {
-        Javafy javafy = new Javafy();
+        String[] meta = {name, val};
+
+        return new Line("assign", meta);
+    }
+
+
+
+    private Line parse_if() {
+        String[] if_args = {"if", getStrBetween("(", ")")};
+        return new Line("control", if_args);
+    }
+
+
+
+    private Line parse_for() {
+        String[] for_args = {"for", getStrBetween("(", ")")};
+        return new Line("control", for_args);
+    }
+
+
+    private Line parse_while() {
+        String[] while_args = {"while", getStrBetween("(", ")")};
+        return new Line("control", while_args);
+    }
+
+    private Line build_function_dec() {
+        String args = getStrBetween("(", ")");
+        String name = getStrBetween(" ", "(" ).trim();
+        String[] meta = {name, args};
+
+        return new Line("function", meta);
+    }
+
+    Boolean is_function_call() {
+        return this.input.startsWith("blaze.");
+    }
+
+    Line ref_function() {
+        String func = getStrBetween(".", "(");
+        String args = getStrBetween("(", ")");
+        String[] meta = {func, args};
+        return new Line("function", meta);
+        //return true;
+    }
+
+    public String parseAST(List<Line> AST) throws IOException {
+        Javafier javafy = new Javafier();
 
         // iterate over lines
         String program = "package compiled; public class Compiled { public static void main(String[] args) {";
@@ -28,51 +96,35 @@ public class Parser extends Tokenizer {
         return program;
     }
 
+    public Line buildTree(String input) {
+        this.input = input.trim();
+        tc.setInput(this.input);
 
-
-    class Javafy {
-        String feed(Line cur) {
-            String type = cur.type;
-            String trans = "";
-            if (type.equals("assign")) {
-                trans = ("String".equals(cur.var.type)) ? assign_str(cur) : assign_num(cur);
-            } else if (type.equals("control")) {
-                trans = assign_control(cur);
-            } else if (type.equals("function")) {
-                trans = cur.func.java_wrap;
-            }
-            if (trans.isEmpty()) {
-                System.out.println("WTF");
-                return null;
-            } else {
-                return trans;
-            }
-        }
-        String assign_num(Line cur) {
-            Variable v = cur.var;
-            String name = v.name;
-            String val = v.val;
-            String var_type = v.type;
-
-            return var_type + " " + name + " = " + val + ";";
+        if (tc.isIf()) {
+            return parse_if();
         }
 
-        String assign_str(Line cur) {
-            Variable v = cur.var;
-            return "String " + v.name + " = \"" + v.val + "\";";
+        if (tc.isFor()) {
+            return parse_for();
         }
 
-        String assign_control(Line cur) {
-            Control c = cur.cont;
-
-            // first build if statement
-            String if_temp = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
-
-            // iterate over inline liens
-            for (Line cur_inline : cur.block) {
-               if_temp += feed(cur_inline) + "\n ";
-            }
-            return if_temp + '}';
+        if (tc.isWhile()) {
+            return parse_while();
         }
+
+        if (tc.isAssignment()) {
+            return parse_assignment();
+        }
+
+        if (tc.isFunctionDeclaration()) {
+            return build_function_dec();
+        }
+
+        // if non of the above,
+        // assume the line is a function call
+        return ref_function();
     }
+
 }
+
+// if u got this far, im sorry
