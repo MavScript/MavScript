@@ -14,7 +14,7 @@ public class Compiler {
 
     public String compileMavScript(String filename) throws IOException {
         Tokenizer tok = new Tokenizer();
-        //Line b = tok.get_tree("if (true) {");
+        //Line b = tok.buildTree("if (true) {");
         String n;
         List<Tokenizer.Line> AST = new ArrayList<Tokenizer.Line>();
         try {
@@ -29,7 +29,7 @@ public class Compiler {
                 if (n.trim().isEmpty()) continue;
 
 
-                Tokenizer.Line cur = tok.get_tree(n);
+                Tokenizer.Line cur = tok.buildTree(n);
                 // check if parent new code block is being init
                 if (n.contains("{")) {
                     List<Tokenizer.Line> clust = getBlockCluster(in);
@@ -57,7 +57,7 @@ public class Compiler {
             // tune out whitespace
             if (n.isEmpty()) continue;
 
-            Tokenizer.Line cur = t.get_tree(n);
+            Tokenizer.Line cur = t.buildTree(n);
             if (n.contains("{")) {
                 List<Tokenizer.Line> nest_block = getBlockCluster(br);
                 cur.set_block(nest_block);

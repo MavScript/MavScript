@@ -21,7 +21,7 @@ public class Tokenizer {
      * @param end character to end
      * @return substring between two characters
      */
-    private String get_str_between(String start, String end) {
+    private String getStrBetween(String start, String end) {
         String str = this.input;
 
         str = str.substring(str.indexOf(start) + 1);
@@ -33,7 +33,7 @@ public class Tokenizer {
      * variables are created with the mav keyword
      * ex: mav a = 5;
      *     mav g = mavup;
-     * @return
+     * @return bool whether this.line is an assignment statement
      */
     private Boolean isAssignment() {
         return this.input.contains("mav ");
@@ -57,10 +57,29 @@ public class Tokenizer {
     private Boolean isIf() {
         return this.input.startsWith("if");
     }
+
+
+    /**
+     * checks if this.input is a for loop
+     * @return
+     */
+    private Boolean isFor() {
+        return this.input.startsWith("for");
+    }
+
+    /**
+     * checks if this.input is a while loop
+     *
+     * @return
+     */
+    private Boolean isWhile() {
+        return this.input.startsWith("while");
+    }
+
     // extracts metadata about assignemnt
     private Line parse_assignment() {
-        String name = get_str_between(" ", "=");
-        String val = get_str_between("=", ";");
+        String name = getStrBetween(" ", "=");
+        String val = getStrBetween("=", ";");
 
         String[] meta = {name, val};
 
@@ -70,25 +89,20 @@ public class Tokenizer {
 
 
     private Line parse_if() {
-        String[] if_args = {"if", get_str_between("(", ")")};
+        String[] if_args = {"if", getStrBetween("(", ")")};
         return new Line("control", if_args);
     }
 
-    private Boolean is_for() {
-        return this.input.startsWith("for");
-    }
+
 
     private Line parse_for() {
-        String[] for_args = {"for", get_str_between("(", ")")};
+        String[] for_args = {"for", getStrBetween("(", ")")};
         return new Line("control", for_args);
     }
 
-    private Boolean is_while() {
-        return this.input.startsWith("while");
-    }
 
     private Line parse_while() {
-        String[] while_args = {"while", get_str_between("(", ")")};
+        String[] while_args = {"while", getStrBetween("(", ")")};
         return new Line("control", while_args);
     }
 
@@ -97,8 +111,8 @@ public class Tokenizer {
     }
 
     private Line build_function_dec() {
-        String args = get_str_between("(", ")");
-        String name = get_str_between(" ", "(" ).trim();
+        String args = getStrBetween("(", ")");
+        String name = getStrBetween(" ", "(" ).trim();
         String[] meta = {name, args};
 
         return new Line("function", meta);
@@ -109,25 +123,25 @@ public class Tokenizer {
     }
 
     Line ref_function() {
-        String func = get_str_between(".", "(");
-        String args = get_str_between("(", ")");
+        String func = getStrBetween(".", "(");
+        String args = getStrBetween("(", ")");
         String[] meta = {func, args};
         return new Line("function", meta);
         //return true;
     }
 
-    public Line get_tree(String input) {
+    public Line buildTree(String input) {
         this.input = input.trim();
 
         if (isIf()) {
             return parse_if();
         }
 
-        if (is_for()) {
+        if (isFor()) {
             return parse_for();
         }
 
-        if (is_while()) {
+        if (isWhile()) {
             return parse_while();
         }
 
