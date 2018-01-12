@@ -62,7 +62,13 @@ public class Javafier {
     }
 
     public void setMainMethod() {
-        String mainMethodSkeleton = "package compiled; public class Compiled { public static void main(String[] args) {<code>}}";
+        String mainMethodSkeleton =
+                "package compiled;\n\n" +
+                    "public class Compiled {\n" +
+                        "\tpublic static void main(String[] args) {\n" +
+                            "\t\t<code>\n" +
+                        "\t}\n" +
+                    "}\n";
         this.code = mainMethodSkeleton.replace("<code>", this.code);
     }
 

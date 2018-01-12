@@ -9,12 +9,19 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println(Arrays.toString(args));
+        CLI cli = new CLI(args);
 
         if (args.length == 0) {
-            System.out.println("\nPlease supply cmd arguments");
+            System.out.println("\nERR: Please supply cmd arguments");
+            cli.help();
             return;
         }
-        CLI cli = new CLI(args);
+
+        if (args.length == 1) {
+            System.out.println("\nERR: You must supply a flag AND argument following");
+            cli.help();
+            return;
+        }
         String flag = args[0];
 
         // check if the -f flag is present
