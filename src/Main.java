@@ -1,5 +1,6 @@
 import Helpers.Compiler;
 import Helpers.FileGenerator;
+import Helpers.CLI;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,26 +16,27 @@ public class Main {
             System.out.println("\nPlease supply cmd arguments");
             return;
         }
-
+        CLI cli = new CLI(args);
         String flag = args[0];
-
-        String filename;
 
         // check if the -f flag is present
         // meaning a single file should be compiled
         if (flag.equals("-f") || flag.equals("-file")) {
-            filename = args[1];
-            Compiler c = new Compiler();
-            String java = c.compileMavScript(filename);
-            FileGenerator.writeJavaToFile(java, filename);
+            cli.file();
         }
 
         // check for the -d comand, meaning an entire
         // folder should be compiled
         if (flag.equals("-d") || flag.equals("-directory")) {
-
+            cli.directory();
         }
 
-        System.out.println("\nSuccess");
+        if (flag.equals("-h")) {
+            cli.help();
+        }
+
+        if (flag.equals("-v")) {
+            cli.version();
+        }
     }
 }
