@@ -1,7 +1,9 @@
+import Helpers.FileGenerator;
 import Helpers.Parser;
 import Helpers.Tokenizer;
 import Helpers.Tokenizer.Line;
 import Helpers.Compiler;
+import Helpers.FileGenerator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Main {
         String filename = "";
 
         // check if the -f flag is present
-        if (args[0].equals("-f") && args[1] != null) {
+        if (args[0].equals("-f")) {
             filename = args[1];
         } else {
             System.out.println("wat");
@@ -32,18 +34,8 @@ public class Main {
         Compiler c = new Compiler();
 
         String java = c.compileMavScript(filename);
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(filename + ".java"));
-            out.write(java);
-            out.close();
 
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("FUCK");
-            return;
-        }
+        FileGenerator.writeJavaToFile(java, filename);
         System.out.println("\nSuccess");
     }
 }
