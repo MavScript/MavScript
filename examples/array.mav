@@ -5,3 +5,5 @@ mav stampede myNum = [1, 2, 5, 3, 2, 5];
 mav stampede myStr = ['hello', 'hi', 'hello'];
 
 mav stampede booly = [mavup, mavup, mavdown];
+
+blaze.neigh(myNum[1] + myNum[2]);
