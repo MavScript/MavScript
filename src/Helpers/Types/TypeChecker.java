@@ -57,6 +57,27 @@ public class TypeChecker {
         return this.input.startsWith("blaze ");
     }
 
+    /**
+     * takes a strign and determiens the type
+     *
+     * @param val
+     * @return
+     */
+    public static String determine_type(String val) {
+        if (val.equals("mavup") || val.equals("mavdown")) {
+            return "Boolean";
+        } else if (val.startsWith("\'")) {
+            return "String";
+        } else {
+            if (val.contains(".")) {
+                return "double";
+            } else {
+                return "int";
+            }
+
+        }
+    }
+
     public void setInput(String input) {
         this.input = input;
     }

@@ -33,7 +33,7 @@ public class Parser {
     }
     
     // extracts metadata about assignemnt
-    private Line parse_assignment() {
+    private Line parseAssignment() {
         String name = getStrBetween(" ", "=");
         String val = getStrBetween("=", ";");
 
@@ -42,27 +42,35 @@ public class Parser {
         return new Line("assign", meta);
     }
 
+    private Line parseArray() {
+        String name = getStrBetween(" ", "=");
+        String val = getStrBetween("=", ";");
 
+        String[] meta = {name, val};
+        return new Line("array", meta);
+    }
 
-    private Line parse_if() {
+    private Line parseIf() {
         String[] if_args = {"if", getStrBetween("(", ")")};
         return new Line("control", if_args);
     }
 
 
 
-    private Line parse_for() {
+    private Line parseFor() {
         String[] for_args = {"for", getStrBetween("(", ")")};
         return new Line("control", for_args);
     }
 
 
-    private Line parse_while() {
+    private Line parseWhile() {
         String[] while_args = {"while", getStrBetween("(", ")")};
         return new Line("control", while_args);
     }
 
-    private Line build_function_dec() {
+
+
+    private Line buildFunctionDec() {
         String args = getStrBetween("(", ")");
         String name = getStrBetween(" ", "(" ).trim();
         String[] meta = {name, args};
@@ -70,11 +78,11 @@ public class Parser {
         return new Line("function", meta);
     }
 
-    Boolean is_function_call() {
+    Boolean isFunctionCall() {
         return this.input.startsWith("blaze.");
     }
 
-    Line ref_function() {
+    Line refFunction() {
         String func = getStrBetween(".", "(");
         String args = getStrBetween("(", ")");
         String[] meta = {func, args};
@@ -100,28 +108,32 @@ public class Parser {
         tc.setInput(this.input);
 
         if (tc.isIf()) {
-            return parse_if();
+            return parseIf();
         }
 
         if (tc.isFor()) {
-            return parse_for();
+            return parseFor();
         }
 
         if (tc.isWhile()) {
-            return parse_while();
+            return parseWhile();
+        }
+
+        if (tc.isArray()) {
+            return parseArray();
         }
 
         if (tc.isAssignment()) {
-            return parse_assignment();
+            return parseAssignment();
         }
 
         if (tc.isFunctionDeclaration()) {
-            return build_function_dec();
+            return buildFunctionDec();
         }
 
         // if non of the above,
         // assume the line is a function call
-        return ref_function();
+        return refFunction();
     }
 
 }

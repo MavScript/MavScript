@@ -15,6 +15,7 @@ public class Line {
     public Variable var;
     public Control ctrl;
     public Function func;
+    public Array arr;
 
     List<Line> block = new ArrayList<Line>();
 
@@ -39,6 +40,10 @@ public class Line {
             case "function": {
                 this.func = new Function(this.metadata[0], this.metadata[1]);
                 break;
+            }
+
+            case "array": {
+                this.arr = new Array(this.metadata[0], this.metadata[1]);
             }
         }
     }

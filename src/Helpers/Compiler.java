@@ -27,6 +27,8 @@ public class Compiler {
                 // if whitespace, skip the line
                 if (n.trim().isEmpty()) continue;
 
+                // if comment, skip this line
+                if (n.trim().startsWith("dont study"));
 
                 Line cur = tok.buildTree(n);
                 // check if parent new code block is being init
