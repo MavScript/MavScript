@@ -8,10 +8,15 @@ public class Variable {
     public String type;
     public String val;
 
-    public Variable(String name, String val) {
+    public Variable(String name, String val, String type) {
         this.name = name;
         this.val = val;
-        this.type = TypeChecker.determine_type(this.val);
+
+        if (type == null) {
+            this.type = TypeChecker.determineType(this.val);
+        } else {
+            this.type = type;
+        }
 
         // Booleans in MS are reskinned as mavup and mavdown for true / false respectively
         // strings are reskinned with single quotes '

@@ -63,7 +63,7 @@ public class TypeChecker {
      * @param val
      * @return
      */
-    public static String determine_type(String val) {
+    public static String determineType(String val) {
         if (val.equals("mavup") || val.equals("mavdown")) {
             return "Boolean";
         } else if (val.startsWith("\'")) {

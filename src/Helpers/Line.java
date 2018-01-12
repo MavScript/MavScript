@@ -28,7 +28,7 @@ public class Line {
     void appendToAST() {
         switch (this.type) {
             case "assign": {
-                this.var = new Variable(this.metadata[0], this.metadata[1]);
+                this.var = new Variable(this.metadata[0], this.metadata[1], null);
                 break;
             }
 

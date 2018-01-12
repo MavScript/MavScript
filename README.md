@@ -22,14 +22,15 @@ To compile MavScript navigate to its directory and execute
 
 This ``-h`` CLI flag will show you the MavScript CLI API at a glance.
 
-<p>To run MavScript and compile your ```.mav``` files
+<p>
+To run MavScript and compile your files
 Here is an example of compiling a single file with the MavScript CLI:
 
 ``java -cp dist Main -f examples/loop.mav``
 
-This will navigate to the ``examples`` directory and compile ``helloworld.mav``
+This will navigate to the ``examples`` directory and compile ``loop.mav``
 MavScript will create a new file in this directory with the ```.mav``` suffix
-In this case, ``helloworld.mav.java`` will be created.</p>
+In this case, ``loop.mav.java`` will be created.</p>
 
 # Usage
 
