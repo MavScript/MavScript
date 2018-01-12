@@ -1,4 +1,4 @@
-dont study mavscript arrays are NOT jagged!
+dont study arrays in mavscirpt are NOT jagged!!
 
 mav stampede myNum = [1, 2, 5, 3, 2, 5];
 

@@ -1,6 +1,8 @@
 package Helpers.Types;
 
 
+import Helpers.Parser;
+
 /**
  * Created by justa on 1/12/2018.
  */
@@ -14,7 +16,9 @@ public class Array {
         this.val = val;
 
         // now determine type of array by instantiating variable instance of the first element
-//        String type = Variable.determine_type("");
+        String firstElement = Parser.getStrBetween(this.val, "[", ",");
+        System.out.println(firstElement);
+//        String type = TypeChecker.determine_type();
 
         this.val = this.val.replaceAll("'", "");
 

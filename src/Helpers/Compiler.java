@@ -24,11 +24,8 @@ public class Compiler {
 
             while ((n = in.readLine()) != null) {
 
-                // if whitespace, skip the line
-                if (n.trim().isEmpty()) continue;
-
-                // if comment, skip this line
-                if (n.trim().startsWith("dont study"));
+                // if whitespace or a comment, skip the line
+                if (isFodder(n.trim())) continue;
 
                 Line cur = tok.buildTree(n);
                 // check if parent new code block is being init
@@ -54,8 +51,8 @@ public class Compiler {
         List<Line> clust = new ArrayList<Line>();
         while (!(n = br.readLine()).contains("}")) {
             n = n.trim();
-            // tune out whitespace
-            if (n.isEmpty()) continue;
+            // tune out whitespace and comments
+            if (isFodder(n)) continue;
 
             Line cur = t.buildTree(n);
             if (n.contains("{")) {
@@ -65,5 +62,9 @@ public class Compiler {
             clust.add(cur);
         }
         return clust;
+    }
+
+    private Boolean isFodder(String cur) {
+        return cur.isEmpty() || cur.contains("dont study");
     }
 }

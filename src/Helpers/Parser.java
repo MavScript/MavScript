@@ -16,7 +16,7 @@ public class Parser {
     
     // current line in iteration
     private String input;
-    TypeChecker tc = new TypeChecker();
+    private TypeChecker tc = new TypeChecker();
 
     /**
      * utility function return s a substring between two characters
@@ -24,8 +24,8 @@ public class Parser {
      * @param end character to end
      * @return substring between two characters
      */
-    public String getStrBetween(String start, String end) {
-        String str = this.input;
+    public static String getStrBetween(String str, String start, String end) {
+
 
         str = str.substring(str.indexOf(start) + 1);
         str = str.substring(0, str.indexOf(end));
@@ -34,8 +34,8 @@ public class Parser {
     
     // extracts metadata about assignemnt
     private Line parseAssignment() {
-        String name = getStrBetween(" ", "=");
-        String val = getStrBetween("=", ";");
+        String name = getStrBetween(this.input, " ", "=");
+        String val = getStrBetween(this.input, "=", ";");
 
         String[] meta = {name, val};
 
@@ -43,36 +43,36 @@ public class Parser {
     }
 
     private Line parseArray() {
-        String name = getStrBetween(" ", "=");
-        String val = getStrBetween("=", ";");
+        String name = getStrBetween(this.input, " ", "=");
+        String val = getStrBetween(this.input, "=", ";");
 
         String[] meta = {name, val};
         return new Line("array", meta);
     }
 
     private Line parseIf() {
-        String[] if_args = {"if", getStrBetween("(", ")")};
+        String[] if_args = {"if", getStrBetween(this.input,"(", ")")};
         return new Line("control", if_args);
     }
 
 
 
     private Line parseFor() {
-        String[] for_args = {"for", getStrBetween("(", ")")};
+        String[] for_args = {"for", getStrBetween(this.input, "(", ")")};
         return new Line("control", for_args);
     }
 
 
     private Line parseWhile() {
-        String[] while_args = {"while", getStrBetween("(", ")")};
+        String[] while_args = {"while", getStrBetween(this.input, "(", ")")};
         return new Line("control", while_args);
     }
 
 
 
     private Line buildFunctionDec() {
-        String args = getStrBetween("(", ")");
-        String name = getStrBetween(" ", "(" ).trim();
+        String args = getStrBetween(this.input, "(", ")");
+        String name = getStrBetween(this.input, " ", "(" ).trim();
         String[] meta = {name, args};
 
         return new Line("function", meta);
@@ -83,8 +83,8 @@ public class Parser {
     }
 
     Line refFunction() {
-        String func = getStrBetween(".", "(");
-        String args = getStrBetween("(", ")");
+        String func = getStrBetween(this.input, ".", "(");
+        String args = getStrBetween(this.input, "(", ")");
         String[] meta = {func, args};
         return new Line("function", meta);
         //return true;
