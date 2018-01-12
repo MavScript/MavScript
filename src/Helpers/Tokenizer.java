@@ -5,12 +5,22 @@ import java.util.List;
 
 /**
  * Created by Anthony Vardaro on 9/30/2017.
+ *
+ * the tokenizer simple reads a single line and determines what to do with it
+ * in terms of how it gets formatted in the abstract syntax tree
  * <p>
 */
 public class Tokenizer {
+
+    // current line in iteration
     private String input;
 
-    // return s a substring between two characters
+    /**
+     * utility function return s a substring between two characters
+     * @param start character to start
+     * @param end character to end
+     * @return substring between two characters
+     */
     private String get_str_between(String start, String end) {
         String str = this.input;
 
@@ -19,11 +29,34 @@ public class Tokenizer {
         return str.trim();
     }
 
-    // checks if the line is delcaring a var
-    private Boolean is_assignment() {
+    /**
+     * variables are created with the mav keyword
+     * ex: mav a = 5;
+     *     mav g = mavup;
+     * @return
+     */
+    private Boolean isAssignment() {
         return this.input.contains("mav ");
     }
 
+    /**
+     * Arrays in mavscript are "mav stampedes"
+     * ex: mav stampede = [1, 2, 4];
+     * this function will check if the this.input is an array declaration.
+     * @return
+     */
+    private Boolean isArray() {
+        return this.input.contains("mav stampede");
+    }
+
+    /**
+     * if statements are self-explanatory
+     * this function checks if this.input is can if statement
+     * @return
+     */
+    private Boolean isIf() {
+        return this.input.startsWith("if");
+    }
     // extracts metadata about assignemnt
     private Line parse_assignment() {
         String name = get_str_between(" ", "=");
@@ -34,9 +67,7 @@ public class Tokenizer {
         return new Line("assign", meta);
     }
 
-    private Boolean is_if() {
-        return this.input.startsWith("if");
-    }
+
 
     private Line parse_if() {
         String[] if_args = {"if", get_str_between("(", ")")};
@@ -88,7 +119,7 @@ public class Tokenizer {
     public Line get_tree(String input) {
         this.input = input.trim();
 
-        if (is_if()) {
+        if (isIf()) {
             return parse_if();
         }
 
@@ -100,7 +131,7 @@ public class Tokenizer {
             return parse_while();
         }
 
-        if (is_assignment()) {
+        if (isAssignment()) {
             return parse_assignment();
         }
 
