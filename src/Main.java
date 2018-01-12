@@ -1,51 +1,69 @@
 import Helpers.Parser;
 import Helpers.Tokenizer;
 import Helpers.Tokenizer.Line;
+import Helpers.Compiler;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
+        System.out.println(Arrays.toString(args));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String filename = br.readLine();
 
-        Tokenizer tok = new Tokenizer();
-        //Line b = tok.get_tree("if (true) {");
-        String n;
-        List<Line> AST = new ArrayList<Line>();
-        try {
-            FileReader fr = new FileReader(filename);
-            BufferedReader in = new BufferedReader(fr);
-
-            // declare ast list for line objects
-
-            while ((n = in.readLine()) != null) {
-
-                // if whitespace, skip the line
-                if (n.trim().isEmpty()) continue;
-
-
-                Line cur = tok.get_tree(n);
-                // check if parent new code block is being init
-                if (n.contains("{")) {
-                    List<Line> clust = getBlockCluster(in);
-                    cur.set_block(clust);
-                }
-                AST.add(cur);
-            }
-            in.close();
-            fr.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File path not found! :(\n");
+        if (args.length == 0) {
+            System.out.println("\nPlease supply cmd arguments");
+            return;
         }
-        Parser p = new Parser();
+        String filename = "";
 
-        String java = p.parse_syntax_list(AST);
+        // check if the -f flag is present
+        if (args[0].equals("-f") && args[1] != null) {
+            filename = args[1];
+        } else {
+            System.out.println("wat");
+        }
+//
+//        Tokenizer tok = new Tokenizer();
+//        //Line b = tok.get_tree("if (true) {");
+//        String n;
+//        List<Line> AST = new ArrayList<Line>();
+//        try {
+//            FileReader fr = new FileReader(filename);
+//            BufferedReader in = new BufferedReader(fr);
+//
+//            // declare ast list for line objects
+//
+//            while ((n = in.readLine()) != null) {
+//
+//                // if whitespace, skip the line
+//                if (n.trim().isEmpty()) continue;
+//
+//
+//                Line cur = tok.get_tree(n);
+//                // check if parent new code block is being init
+//                if (n.contains("{")) {
+//                    List<Line> clust = getBlockCluster(in);
+//                    cur.set_block(clust);
+//                }
+//                AST.add(cur);
+//            }
+//            in.close();
+//            fr.close();
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File path not found! :(\n");
+//            return;
+//        }
+//        Parser p = new Parser();
+//
+//        String java = p.parse_syntax_list(AST);
 
         // write java string to file
+        Compiler c = new Compiler();
+
+        String java = c.compileMavScript(filename);
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(filename + ".java"));
             out.write(java);
@@ -54,8 +72,9 @@ public class Main {
 
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             System.out.println("FUCK");
+            return;
         }
         System.out.println("\nSuccess");
     }
