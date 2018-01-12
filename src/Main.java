@@ -1,14 +1,8 @@
-import Helpers.FileGenerator;
-import Helpers.Parser;
-import Helpers.Tokenizer;
-import Helpers.Tokenizer.Line;
 import Helpers.Compiler;
 import Helpers.FileGenerator;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Anthony Vardaro
@@ -33,7 +27,6 @@ public class Main {
             Compiler c = new Compiler();
             String java = c.compileMavScript(filename);
             FileGenerator.writeJavaToFile(java, filename);
-
         }
 
         // check for the -d comand, meaning an entire
