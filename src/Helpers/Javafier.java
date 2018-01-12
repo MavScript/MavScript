@@ -7,20 +7,26 @@ import Helpers.Types.*;
  */
 
 public class Javafier {
-    //cli command_line= new cli();
 
-    //String file_name= command_line.file_name
+    public String code;
+
+    public Javafier(String code) {
+        this.code = code;
+
+    }
 
     String feed(Line cur) {
         String type = cur.type;
         String trans = "";
+
         if (type.equals("assign")) {
-            trans = ("String".equals(cur.var.type)) ? assign_str(cur) : assign_num(cur);
+            trans = ("String".equals(cur.var.type)) ? assignString(cur) : assignNum(cur);
         } else if (type.equals("control")) {
-            trans = assign_control(cur);
+            trans = assignControl(cur);
         } else if (type.equals("function")) {
             trans = cur.func.java_wrap;
         }
+
         if (trans.isEmpty()) {
             System.out.println("WTF");
             return null;
@@ -28,7 +34,7 @@ public class Javafier {
             return trans;
         }
     }
-    String assign_num(Line cur) {
+    String assignNum(Line cur) {
         Variable v = cur.var;
         String name = v.name;
         String val = v.val;
@@ -37,21 +43,30 @@ public class Javafier {
         return var_type + " " + name + " = " + val + ";";
     }
 
-    String assign_str(Line cur) {
+    String assignString(Line cur) {
         Variable v = cur.var;
         return "String " + v.name + " = \"" + v.val + "\";";
     }
 
-    String assign_control(Line cur) {
+    String assignControl(Line cur) {
         Control c = cur.ctrl;
 
         // first build if statement
-        String if_temp = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
+        String statement = "TYPE (ARGS) {\n".replace("ARGS", c.args).replace("TYPE", c.type);
 
         // iterate over inline liens
         for (Line cur_inline : cur.block) {
-            if_temp += feed(cur_inline) + "\n ";
+            statement += feed(cur_inline) + "\n ";
         }
-        return if_temp + '}';
+        return statement + '}';
+    }
+
+    public void setMainMethod() {
+        String mainMethodSkeleton = "package compiled; public class Compiled { public static void main(String[] args) {<code>}}";
+        this.code = mainMethodSkeleton.replace("<code>", this.code);
+    }
+
+    public void setCode(String append) {
+        this.code += append;
     }
 }

@@ -14,7 +14,6 @@ public class Compiler {
 
     public String compileMavScript(String filename) throws IOException {
         Parser tok = new Parser();
-        //Line b = tok.buildTree("if (true) {");
         String n;
         List<Line> AST = new ArrayList<Line>();
         try {
@@ -33,7 +32,7 @@ public class Compiler {
                 // check if parent new code block is being init
                 if (n.contains("{")) {
                     List<Line> clust = getBlockCluster(in);
-                    cur.set_block(clust);
+                    cur.setBlock(clust);
                 }
                 AST.add(cur);
             }
@@ -42,7 +41,7 @@ public class Compiler {
         } catch (FileNotFoundException e) {
             System.out.println("File path not found! :(\n");
         }
-
+        System.out.println("done building");
         return tok.parseAST(AST);
 
     }
@@ -59,7 +58,7 @@ public class Compiler {
             Line cur = t.buildTree(n);
             if (n.contains("{")) {
                 List<Line> nest_block = getBlockCluster(br);
-                cur.set_block(nest_block);
+                cur.setBlock(nest_block);
             }
             clust.add(cur);
         }

@@ -83,17 +83,17 @@ public class Parser {
     }
 
     public String parseAST(List<Line> AST) throws IOException {
-        Javafier javafy = new Javafier();
+        Javafier javafy = new Javafier("");
 
         // iterate over lines
-        String program = "package compiled; public class Compiled { public static void main(String[] args) {";
         for (Line cur : AST) {
-            String java_transpile = javafy.feed(cur);
-            program += java_transpile;
+            String transpilation = javafy.feed(cur);
+            javafy.setCode(transpilation);
         }
-        program = program + "}}";
 
-        return program;
+        javafy.setMainMethod();
+
+        return javafy.code;
     }
 
     public Line buildTree(String input) {

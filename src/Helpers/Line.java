@@ -21,10 +21,10 @@ public class Line {
     Line(String type, String[] metadata) {
         this.type = type;
         this.metadata = metadata;
-        set_exe();
+        appendToAST();
     }
 
-    void set_exe() {
+    void appendToAST() {
         switch (this.type) {
             case "assign": {
                 this.var = new Variable(this.metadata[0], this.metadata[1]);
@@ -43,7 +43,7 @@ public class Line {
         }
     }
 
-    public void set_block(List<Line> b) {
+    public void setBlock(List<Line> b) {
         this.block = b;
     }
 
