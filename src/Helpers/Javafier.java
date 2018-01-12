@@ -32,6 +32,8 @@ public class Javafier {
             case "array":
                 trans = assignArray(cur);
                 break;
+            case "reassign":
+                trans = getReassignment(cur);
         }
 
         if (trans.isEmpty()) {
@@ -55,6 +57,9 @@ public class Javafier {
         return "String " + v.name + " = " + v.val + ";";
     }
 
+    String getReassignment(Line cur) {
+        return cur.metadata[0] + " = " + cur.metadata[1] + ";"; //lol
+    }
 
     String assignArray(Line cur) {
 
@@ -92,14 +97,22 @@ public class Javafier {
         return statement + "}";
     }
     
-    public void setMainMethod() {
+    public void setMainMethod(String filename) {
+
+        // tune of / from directory path so we can clean the raw filename
+        if (filename.contains("/")) {
+            filename = filename.substring(filename.lastIndexOf("/") + 1);
+        }
+
+        filename = filename.substring(0, filename.indexOf('.'));
+
         String mainMethodSkeleton =
-                    "public class Main {" +
+                    "public class <filename> {" +
                         "\tpublic static void main(String[] args) {" +
                             "<code>" +
                         "\t}" +
                     "}";
-        this.code = mainMethodSkeleton.replace("<code>", this.code);
+        this.code = mainMethodSkeleton.replace("<code>", this.code).replace("<filename>", filename);
     }
 
     public void setPackage(String packageName) {

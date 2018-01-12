@@ -1,0 +1,6 @@
+mav a = 20;
+mav b = 50;
+
+mav temp = a;
+a = b;
+b = temp;

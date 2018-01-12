@@ -10,7 +10,8 @@ public class FileGenerator {
 
     public static void writeJavaToFile(String java, String path) {
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(path + ".java"));
+            String filename = path.substring(0, path.indexOf('.'));
+            BufferedWriter out = new BufferedWriter(new FileWriter(filename + ".java"));
             out.write(java);
             out.close();
 

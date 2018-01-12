@@ -41,7 +41,7 @@ public class Compiler {
             System.out.println("File path not found! :(\n");
         }
         System.out.println("done building");
-        return tok.parseAST(AST);
+        return tok.parseAST(AST, filename);
 
     }
 
