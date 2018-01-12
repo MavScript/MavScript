@@ -42,9 +42,8 @@ public class Compiler {
         } catch (FileNotFoundException e) {
             System.out.println("File path not found! :(\n");
         }
-        Javafier p = new Javafier();
 
-        return p.parse_syntax_list(AST);
+        return tok.parseAST(AST);
 
     }
 
